@@ -15,7 +15,7 @@ Lidra is a self-contained, end-to-end financial data processing system that simu
 ##  Architecture
 
 ```mermaid
-graph LR
+graph TD
     subgraph Ingestion["Ingestion Pipeline"]
         A(generator.py) -->|raw_transactions.csv| B(cleaner.py)
     end
