@@ -23,18 +23,18 @@ graph TD
     B ===>|Cleaned Data| DB[(Central Database)]
     
     %% Processing Branches
-    DB -->|Txn History| C({financial_health.sql})
+    DB -->|Txn History| C([financial_health.sql])
     C -->|Risk Factors| D([credit_adjuster.py])
     
     DB -->|Txn History| E([zscore_detector.py])
     DB -->|Deposits| F([smurfing_detector.py])
     
     %% Reporting
-    D -.->|Credit Metrics| R>performance_report.py]
+    D -.->|Credit Metrics| R([performance_report.py])
     E -.->|AML Alerts| R
     F -.->|AML Alerts| R
     
-    R ===> Dash{Dashboard.py}
+    R ===> Dash([Dashboard.py])
 
     %% Styling
     classDef ingest fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000
