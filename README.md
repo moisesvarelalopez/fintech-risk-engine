@@ -15,37 +15,26 @@ Lidra is a self-contained, end-to-end financial data processing system that simu
 ##  Architecture
 
 ```mermaid
-graph TD
+flowchart TD
     %% Ingestion
-    A([generator.py]) -.->|raw_transactions| B([cleaner.py])
+    A(["⚙️ generator.py"]) -.->|"Raw Data"| B(["🧹 cleaner.py"])
     
     %% Storage
-    B ===>|Cleaned Data| DB[(Central Database)]
+    B ===>|"Cleaned Data"| DB[("🗄️ Central Database")]
     
     %% Processing Branches
-    DB -->|Txn History| C([financial_health.sql])
-    C -->|Risk Factors| D([credit_adjuster.py])
+    DB -->|"Txn History"| C(["🧠 financial_health.sql"])
+    C -->|"Risk Factors"| D(["⚖️ credit_adjuster.py"])
     
-    DB -->|Txn History| E([zscore_detector.py])
-    DB -->|Deposits| F([smurfing_detector.py])
+    DB -->|"Txn History"| E(["🔍 zscore_detector.py"])
+    DB -->|"Deposits"| F(["🛡️ smurfing_detector.py"])
     
     %% Reporting
-    D -.->|Credit Metrics| R([performance_report.py])
-    E -.->|AML Alerts| R
-    F -.->|AML Alerts| R
+    D -.->|"Credit Metrics"| R(["📊 performance_report.py"])
+    E -.->|"AML Alerts"| R
+    F -.->|"AML Alerts"| R
     
-    R ===> Dash([Dashboard.py])
-
-    %% Styling
-    classDef ingest fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000
-    classDef db fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000
-    classDef logic fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:#000
-    classDef report fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
-
-    class A,B ingest
-    class DB db
-    class C,D,E,F logic
-    class R,Dash report
+    R ===> Dash(["🖥️ Dashboard.py"])
 ```
 
 ## Performance Benchmarks
