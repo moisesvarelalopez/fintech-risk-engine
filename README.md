@@ -17,24 +17,24 @@ Lidra is a self-contained, end-to-end financial data processing system that simu
 ```mermaid
 flowchart TD
     %% Ingestion
-    A(["⚙️ generator.py"]) -.->|"Raw Data"| B(["🧹 cleaner.py"])
+    A(["generator.py"]) -.->|"Raw Data"| B(["cleaner.py"])
     
     %% Storage
-    B ===>|"Cleaned Data"| DB[("🗄️ Central Database")]
+    B ===>|"Cleaned Data"| DB[("Central Database")]
     
     %% Processing Branches
-    DB -->|"Txn History"| C(["🧠 financial_health.sql"])
-    C -->|"Risk Factors"| D(["⚖️ credit_adjuster.py"])
+    DB -->|"Txn History"| C(["financial_health.sql"])
+    C -->|"Risk Factors"| D(["credit_adjuster.py"])
     
-    DB -->|"Txn History"| E(["🔍 zscore_detector.py"])
-    DB -->|"Deposits"| F(["🛡️ smurfing_detector.py"])
+    DB -->|"Txn History"| E(["zscore_detector.py"])
+    DB -->|"Deposits"| F(["smurfing_detector.py"])
     
     %% Reporting
-    D -.->|"Credit Metrics"| R(["📊 performance_report.py"])
+    D -.->|"Credit Metrics"| R(["performance_report.py"])
     E -.->|"AML Alerts"| R
     F -.->|"AML Alerts"| R
     
-    R ===> Dash(["🖥️ Dashboard.py"])
+    R ===> Dash(["Dashboard.py"])
 ```
 
 ## Performance Benchmarks
