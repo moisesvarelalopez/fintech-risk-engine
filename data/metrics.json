@@ -1,0 +1,40 @@
+{
+    "stages": {
+        "Data Generation": {
+            "duration": 1.3834993839263916,
+            "peak_memory_mb": 0.291237,
+            "stdout": "Generating 1000 customers...\nGenerating 1500 accounts...\nGenerating 100000 transactions...\nWriting customers.csv...\nWriting accounts.csv...\nWriting raw_transactions.csv...\nSuccessfully generated 1000 customers, 1500 accounts, and 100000 transactions.\n"
+        },
+        "Data Cleaning": {
+            "duration": 1.6240172386169434,
+            "peak_memory_mb": 0.288953,
+            "stdout": "Cleaning data from data\\raw_transactions.csv...\n\n--- Data Quality Report ---\nTotal Rows Processed : 100000\nClean Rows Output    : 95752\nRows Rejected        : 4254 (4.25%)\nRows Corrected       : 6510 (6.51%)\nAudit log saved to   : data\\data_quality_audit.csv\n"
+        },
+        "Database Loader": {
+            "duration": 0.8570187091827393,
+            "peak_memory_mb": 0.288985,
+            "stdout": "Connecting to database\\lidra.db...\nExecuting schema...\nLoading customers...\nLoading accounts...\nLoading transactions into DB...\nDatabase loaded successfully.\n"
+        },
+        "Credit Logic": {
+            "duration": 0.3284006118774414,
+            "peak_memory_mb": 0.288241,
+            "stdout": "Evaluating credit limits...\nCredit limits adjusted for 1304 accounts. Log saved to data\\credit_adjustments.csv\n"
+        },
+        "Z-Score Anomaly": {
+            "duration": 0.620739221572876,
+            "peak_memory_mb": 0.288266,
+            "stdout": "Running Z-Score Anomaly Detection on data\\clean_transactions.csv...\nAML Z-Score Detector found 0 anomalous transactions. Log saved to data\\aml_zscore_alerts.csv\n"
+        },
+        "Smurfing Anomaly": {
+            "duration": 0.24951744079589844,
+            "peak_memory_mb": 0.288171,
+            "stdout": "Running Smurfing Structuring Detection on data\\clean_transactions.csv...\nAML Smurfing Detector found 14 structuring events. Log saved to data\\aml_smurfing_alerts.csv\n"
+        }
+    },
+    "data_quality": {
+        "raw_rows": 100000,
+        "clean_rows": 95752,
+        "rejected": 4254,
+        "corrected": 6510
+    }
+}
