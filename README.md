@@ -15,25 +15,35 @@ Lidra is a self-contained, end-to-end financial data processing system that simu
 ##  Architecture
 
 ```mermaid
-graph TD
-    subgraph Ingestion Pipeline
+graph LR
+    subgraph Ingestion["Ingestion Pipeline"]
         A(generator.py) -->|raw_transactions.csv| B(cleaner.py)
-        B -->|clean_transactions.csv| DB[(PostgreSQL / SQLite)]
     end
-    subgraph Core Credit Logic
-        DB -->|Transactions & Customers| C(financial_health.sql)
-        C -->|Risk Factors| D(credit_adjuster.py)
+
+    DB[(PostgreSQL / SQLite)]
+    B -->|clean| DB
+
+    subgraph Credit["Core Credit Logic"]
+        C(financial_health.sql) -->|Risk Factors| D(credit_adjuster.py)
     end
-    subgraph Security & AML Sentinel
-        DB -->|Clean Transactions| E(zscore_detector.py)
-        DB -->|Deposits| F(smurfing_detector.py)
+
+    DB -->|History| C
+
+    subgraph AML["Security & AML Sentinel"]
+        E(zscore_detector.py)
+        F(smurfing_detector.py)
     end
-    subgraph Orchestration & Reporting
-        D --> R(performance_report.py)
-        E --> R
-        F --> R
-        R --> Dash[Dashboard.py]
+
+    DB -->|Clean Txns| E
+    DB -->|Deposits| F
+
+    subgraph Orchestration["Orchestration & Reporting"]
+        R(performance_report.py) --> Dash[Dashboard.py]
     end
+
+    D --> R
+    E --> R
+    F --> R
 ```
 
 ## Performance Benchmarks
